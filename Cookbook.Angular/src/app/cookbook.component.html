@@ -1,0 +1,21 @@
+<md-sidenav-layout class="app-root" fullscreen>
+  <md-sidenav #start id="sidenav">
+    <md-nav-list>
+      <a md-list-item [routerLink]="['Home']" (click)="start.close()">Home</a>
+      <a md-list-item *ngIf="!loggedIn()" (click)="start.close(); doLogin();">Login</a>
+      <a md-list-item *ngIf="loggedIn()" (click)="start.close(); doLogout();">Logout</a>
+    </md-nav-list>
+    <button md-button (click)="start.close()">CLOSE</button>
+  </md-sidenav>
+  <div>
+    <md-toolbar color="primary">
+      <md-icon (click)="start.open()">menu</md-icon>
+      <div class="app-toolbar">
+        <h1>{{title}}</h1>
+      </div>
+    </md-toolbar>
+    <div class="app-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</md-sidenav-layout>

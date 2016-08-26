@@ -1,0 +1,19 @@
+.nav-buttons {
+  display: flex;
+  margin: 16px;  
+}
+
+.recipe {
+  display: flex;
+  margin: 16px;
+}
+
+.recpictures {
+  display: flex;
+  flex-flow: row wrap 
+}
+
+.recpictures section {
+  width: 300px;
+  margin: 16px;
+}

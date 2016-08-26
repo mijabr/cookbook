@@ -1,0 +1,36 @@
+.nav-buttons {
+  display: flex;
+  margin: 16px;  
+}
+
+.recipe {
+  display: flex;
+}
+
+.recipe-name {
+  width: 300px;
+}
+
+.recipe ul {
+    list-style-type: none;
+}
+
+.recipe md-icon {
+  vertical-align: top;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.recipe-method {
+  width: 100pc;
+}
+
+.recpictures {
+  display: flex;
+  flex-flow: row wrap 
+}
+
+.recpictures section {
+  width: 300px;
+  margin: 16px;
+}

@@ -1,0 +1,11 @@
+<div class="recipe-card">
+  <md-card>
+    <img *ngIf="recipe.Pictures.length > 0" md-card-image src="/assets/{{recipe.Pictures[0].Filename}}">
+    <md-card-content>
+      <md-card-title-text>{{recipe.Name}}</md-card-title-text>
+    </md-card-content>
+    <md-card-actions align="center">
+      <button md-button color="primary" [routerLink]="['ViewRecipe', {id: recipe.Id}]">View</button>
+    </md-card-actions>
+  </md-card>
+</div>

@@ -1,0 +1,14 @@
+.home .welcome {
+  margin-left: 16px;
+}
+
+.home section {
+  display: flex;
+  flex-flow: row wrap 
+}
+
+.nav-buttons {
+  display: flex;
+  margin: 16px;  
+}
+

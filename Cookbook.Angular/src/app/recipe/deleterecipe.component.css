@@ -1,0 +1,27 @@
+.nav-buttons {
+  display: flex;
+  margin: 16px;
+}
+
+.nav-buttons md-input {
+  width: 190px;  
+}
+
+.nav-buttons button {
+  height: 35px;
+}
+
+.recipe {
+  display: flex;
+  margin: 16px;
+}
+
+.recpictures {
+  display: flex;
+  flex-flow: row wrap 
+}
+
+.recpictures section {
+  width: 300px;
+  margin: 16px;
+}
