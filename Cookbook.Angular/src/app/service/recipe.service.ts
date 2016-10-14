@@ -1,13 +1,10 @@
 import {Component, Injectable} from '@angular/core';
-import {Http, HTTP_PROVIDERS, Headers, RequestOptions} from "@angular/http";
+import {Http, Headers, RequestOptions} from "@angular/http";
 import {Observable} from "rxjs/Observable"
 import {IRecipe} from '../model/recipe';
 import {MockRecipes} from './recipe.mock';
 import '../array.extension'
 
-@Component({
-    providers: [HTTP_PROVIDERS]
-})
 @Injectable()
 export class RecipeService {
 

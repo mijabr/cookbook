@@ -1,14 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "removeComments": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": false,
     "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true
+    "sourceMap": true,
+    "target": "es5",
+    "removeComments": false,
+    "suppressImplicitAnyIndexErrors": true,
+     "typeRoots": [
+      "node_modules/@types"
+    ]
   },
   "exclude": [
     "node_modules",

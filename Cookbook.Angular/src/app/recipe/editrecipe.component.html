@@ -1,35 +1,29 @@
 <div class="nav-buttons">
-  <button *ngIf="selectedRecipe" md-raised-button (click)='onSave()'>Save</button>
-  <button *ngIf="selectedRecipe" md-raised-button [routerLink]="['ViewRecipe', {id: selectedRecipe.Id}]">Cancel</button>
+	<button *ngIf="selectedRecipe" md-raised-button (click)='onSave()'>Save</button>
+	<button *ngIf="selectedRecipe" md-raised-button [routerLink]="['/recipe/view/', selectedRecipe.Id]">Cancel</button>
 </div>
 <div *ngIf="selectedRecipe">
-  <md-card>
-    <div class="recipe">
-      <div>
-        <md-input class="recipe-name" [(ngModel)]='selectedRecipe.Name' placeholder='Recipe Name'></md-input>
-        <h3>Ingredients</h3>
-        <ul>
-          <li *ngFor="let ingredient of selectedRecipe.Ingredients">
-            <md-icon svgIcon="delete" (click)='onRemoveIngredient(ingredient)'></md-icon>
-            <md-input [(ngModel)]='ingredient.Quantity' placeholder='Quantity'></md-input>
-            <md-input [(ngModel)]='ingredient.QuantityName' placeholder='Quantity Name'></md-input>
-            <md-input [(ngModel)]='ingredient.Name' placeholder='Ingredient Name'></md-input>
-            <md-input [(ngModel)]='ingredient.Condition' placeholder='Condition'></md-input>
-        </ul>
-        <md-icon svgIcon="add" (click)='onAddIngredient()'></md-icon>
-        <h3>Method</h3>
-        <md-input class='recipe-method' [(ngModel)]="selectedRecipe.Method" placeholder='Method'></md-input>
-      </div>
-    </div>
-  </md-card>
-</div>
-<div *ngIf="selectedRecipe" class="recpictures">
-  <section>
-    <md-card *ngFor='let pic of selectedRecipe.Pictures'>
-      <img md-card-image src="/assets/{{pic.Filename}}">
-      <md-card-content>
-        <md-card-title-text>{{pic.Caption}}</md-card-title-text>
-      </md-card-content>
-    </md-card>
-  </section>
+	<md-card *ngIf="selectedRecipe" class="recipe">
+		<md-card-content>
+			<md-input class="recipe-name" [(ngModel)]='selectedRecipe.Name' placeholder='Recipe Name'></md-input>
+			<h3>Ingredients</h3>
+			<ul>
+				<li *ngFor="let ingredient of selectedRecipe.Ingredients">
+					<md-icon svgIcon="delete" (click)='onRemoveIngredient(ingredient)'></md-icon>
+					<md-input [(ngModel)]='ingredient.Quantity' placeholder='Quantity' item-width="40" class="quantity"></md-input>
+					<md-input [(ngModel)]='ingredient.QuantityName' placeholder='Quantity Name'></md-input>
+					<md-input [(ngModel)]='ingredient.Name' placeholder='Ingredient Name'></md-input>
+					<md-input [(ngModel)]='ingredient.Condition' placeholder='Condition'></md-input>
+			</ul>
+			<md-icon svgIcon="add" (click)='onAddIngredient()'></md-icon>
+			<h3>Method</h3>
+			<md-input class='recipe-method' [(ngModel)]="selectedRecipe.Method" placeholder='Method'></md-input>
+		</md-card-content>
+	</md-card>
+	<md-card *ngFor='let pic of selectedRecipe.Pictures' class="pictures">
+		<md-card-content>
+			<img md-card-image src="/assets/{{pic.Filename}}">
+			<div>{{pic.Caption}}</div>
+		</md-card-content>
+	</md-card>
 </div>

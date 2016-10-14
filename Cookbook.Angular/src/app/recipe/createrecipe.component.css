@@ -5,6 +5,8 @@
 
 .recipe {
   display: flex;
+  flex-direction: column;
+  margin: 16px;
 }
 
 .recipe-name {
@@ -25,12 +27,9 @@
   width: 100pc;
 }
 
-.recpictures {
+.pictures {
   display: flex;
-  flex-flow: row wrap 
-}
-
-.recpictures section {
-  width: 300px;
+  flex-flow: row wrap;
+  width: 200px;
   margin: 16px;
 }

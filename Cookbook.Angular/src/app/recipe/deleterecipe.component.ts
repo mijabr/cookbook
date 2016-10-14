@@ -1,23 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouteParams, RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { ActivatedRoute, Params, Router }   from '@angular/router';
 import { IRecipe } from '../model/recipe';
 import { RecipeService } from '../service/recipe.service';
-import { FORM_DIRECTIVES } from '@angular/forms';
-import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
-import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
 
 @Component({
   selector: 'deleterecipe',
   template: require('./deleterecipe.component.html'),
-  styles: [require('./deleterecipe.component.css')],
-  directives: [ROUTER_DIRECTIVES, MD_CARD_DIRECTIVES, MD_INPUT_DIRECTIVES, FORM_DIRECTIVES],
-  providers: [RecipeService]
+  styles: [require('./deleterecipe.component.css')]
 })
 export class DeleteRecipeComponent implements OnInit {
   
-  constructor(private _recipeService : RecipeService,
-              private _router : Router,
-              private _params : RouteParams)
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private _recipeService : RecipeService)
   {
   }
 
@@ -26,9 +21,11 @@ export class DeleteRecipeComponent implements OnInit {
 
   ngOnInit()
   {
-    var id = +this._params.get('id');
-    this._recipeService.getRecipe(id)
-      .subscribe(recipe => this.selectedRecipe = recipe);
+    this.route.params.forEach((params : Params) => {
+      let id = +params['id'];
+      this._recipeService.getRecipe(id)
+        .subscribe(recipe => this.selectedRecipe = recipe);
+    });
   }
 
   onDelete()
@@ -38,7 +35,7 @@ export class DeleteRecipeComponent implements OnInit {
       this._recipeService.deleteRecipe(this.selectedRecipe.Id)
         .subscribe(
           response => {
-            this._router.navigate(['Home']);
+            this.router.navigate(['/']);
             },
           error => {
             alert(error.text());

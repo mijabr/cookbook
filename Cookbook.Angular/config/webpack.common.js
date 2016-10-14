@@ -7,7 +7,7 @@ module.exports = {
   entry: {
     'polyfills': './src/polyfills.ts',
     'vendor': './src/vendor.ts',
-    'cookbook-app': './src/main.ts'
+    'cookbook-app': './src/app/main.ts'
   },
 
   resolve: {

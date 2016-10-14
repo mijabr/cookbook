@@ -3,13 +3,6 @@
   .app-root * {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale; }
-  .app-root md-sidenav {
-    min-width: 15%; }
-    .app-root md-sidenav [md-button] {
-      width: 100%;
-      position: relative;
-      bottom: 0;
-      margin: 0px 0; }
   .app-root .app-content {
     padding: 0px; }
   .app-root md-toolbar md-icon {

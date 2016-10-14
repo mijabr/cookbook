@@ -13,8 +13,8 @@ namespace Cookbook.Controllers
     public class RecipeController : ApiController
     {
         [HttpGet]
-        [Route("Recipe")]
-        public IHttpActionResult Get()
+        [Route("recipe")]
+        public IHttpActionResult GetRecipe()
         {
             RecipeDataAccess da = new RecipeDataAccess();
             IEnumerable<Recipe> result = da.GetAllRecipes();
@@ -28,8 +28,8 @@ namespace Cookbook.Controllers
         }
 
         [HttpGet]
-        [Route("Recipe/{id}")]
-        public IHttpActionResult Get(int id)
+        [Route("recipe/{id}")]
+        public IHttpActionResult GetRecipe(int id)
         {
             RecipeDataAccess da = new RecipeDataAccess();
             Recipe result = da.GetRecipe(id);
@@ -43,7 +43,7 @@ namespace Cookbook.Controllers
         }
 
         [HttpPut]
-        [Route("Recipe")]
+        [Route("recipe")]
         public IHttpActionResult Put([FromBody] Recipe recipe)
         {
             RecipeDataAccess da = new RecipeDataAccess();
@@ -52,7 +52,7 @@ namespace Cookbook.Controllers
         }
 
         [HttpPost]
-        [Route("Recipe")]
+        [Route("recipe")]
         public IHttpActionResult Post([FromBody] Recipe recipe)
         {
             RecipeDataAccess da = new RecipeDataAccess();
@@ -61,8 +61,8 @@ namespace Cookbook.Controllers
         }
 
         [HttpDelete]
-        [Route("Recipe")]
-        public IHttpActionResult Delete(int id)
+        [Route("recipe/{id}")]
+        public IHttpActionResult DeleteRecipe(int id)
         {
             RecipeDataAccess da = new RecipeDataAccess();
             da.DeleteRecipe(id);

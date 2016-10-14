@@ -1,4 +1,4 @@
-import {
+/*import {
   beforeEachProviders,
   describe,
   expect,
@@ -19,4 +19,4 @@ describe('App: Cookbook', () => {
   //    inject([CookbookAppComponent], (app: CookbookAppComponent) => {
   //  expect(app.title).toEqual('cookbook works!');
   //}));
-});
+});*/

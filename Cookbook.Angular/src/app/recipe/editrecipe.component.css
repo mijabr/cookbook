@@ -5,6 +5,18 @@
 
 .recipe {
   display: flex;
+  flex-direction: column;
+  margin: 16px;
+}
+
+.recipe quantity {
+  width: 40;
+}
+.pictures {
+  display: flex;
+  flex-flow: row wrap;
+  width: 200px;
+  margin: 16px;
 }
 
 .recipe-name {
@@ -23,14 +35,4 @@
 
 .recipe-method {
   width: 100pc;
-}
-
-.recpictures {
-  display: flex;
-  flex-flow: row wrap 
-}
-
-.recpictures section {
-  width: 300px;
-  margin: 16px;
 }

@@ -1,11 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthHttp, tokenNotExpired } from 'angular2-jwt';
-import { Router, RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
-import { MdButton, MdAnchor } from '@angular2-material/button/button';
-import { MD_SIDENAV_DIRECTIVES, MdSidenav } from '@angular2-material/sidenav';
-import { MD_LIST_DIRECTIVES } from '@angular2-material/list/list';
-import { MdToolbar } from '@angular2-material/toolbar/toolbar';
-import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { IRecipe } from './model/recipe';
 import { AppService } from './service/app.service';
 import { RecipeService } from './service/recipe.service';
@@ -28,30 +22,14 @@ declare var Auth0Lock: any;
   selector: 'cookbook-app',
   template: require('./cookbook.component.html'),
   styles: [require('./cookbook.component.css')],
-  directives: [
-    ROUTER_DIRECTIVES,
-    MdButton, MdAnchor,
-    MD_SIDENAV_DIRECTIVES,
-    MD_LIST_DIRECTIVES,
-    MdToolbar,
-    MdIcon,
-    ViewRecipeComponent, EditRecipeComponent],
-  providers: [MdIconRegistry, AppService, RecipeService]
+  providers: [AppService, RecipeService]
 })
 export class CookbookAppComponent implements OnInit {
 
   constructor(
     private _recipeService: RecipeService,
     private _appService: AppService,
-    private _router: Router
   ) {
-    _router.config([
-      { path: '/', name: "Home", component: HomeComponent, useAsDefault: true },
-      { path: '/recipe/:id', name: "ViewRecipe", component: ViewRecipeComponent },
-      { path: '/recipe/edit/:id', name: "EditRecipe", component: EditRecipeComponent },
-      { path: '/recipe/create', name: "CreateRecipe", component: CreateRecipeComponent },
-      { path: '/recipe/delete/:id', name: "DeleteRecipe", component: DeleteRecipeComponent },
-    ]);
       _appService.setItem('title','Cookbook');
       _appService.setItem('givenName','');
   }
@@ -70,12 +48,12 @@ export class CookbookAppComponent implements OnInit {
 
   doLogin() {
     this.login();
-    this._router.renavigate();
+    //this._router.renavigate();
   }
 
   doLogout() {
     this.logout();
-    this._router.renavigate();
+    //this._router.renavigate();
   }
 
   // Google client ID

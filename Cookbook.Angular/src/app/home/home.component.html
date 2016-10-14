@@ -3,9 +3,6 @@
         <h4 *ngIf='givenName' class="md-display-4">Hi {{givenName}}, welcome to {{title}}. Discover, create & enjoy!</h4>
         <h4 *ngIf='!givenName' class="md-display-4">Welcome to {{title}}. Discover, create & enjoy!</h4>
     </div>
-    <div class="nav-buttons">
-        <button md-raised-button [routerLink]="['CreateRecipe']">Create</button>
-    </div>
     <section>
         <span *ngFor='let r of recipes'>
             <recipecard [recipe]="r"></recipecard>
