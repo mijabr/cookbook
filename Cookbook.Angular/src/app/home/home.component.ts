@@ -9,21 +9,18 @@ import { CreateRecipeComponent } from '../recipe/createrecipe.component';
 @Component({
   selector: 'home-component',
   template: require('./home.component.html'),
-  styles: [require('./home.component.css')],
-  providers: [AppService, RecipeService]
+  styles: [require('./home.component.css')]
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private appService: AppService,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
+              private appService: AppService,
               private recipeService: RecipeService)
   {
-    this.title = appService.getItem('title');
-    this.givenName = appService.getItem('givenName');
+    this.appTitle = this.appService.getItem('appTitle');
   }
 
-  title: string;
-  givenName: string;
+  appTitle: string;
   recipes: IRecipe[];
 
   ngOnInit() {

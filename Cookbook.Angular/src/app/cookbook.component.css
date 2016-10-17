@@ -1,20 +1,22 @@
 .app-root {
-  font-family: Roboto, 'Helvetica Neue', sans-serif; }
-  .app-root * {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale; }
-  .app-root .app-content {
-    padding: 0px; }
-  .app-root md-toolbar md-icon {
-    padding: 20px;
-    cursor: pointer; }
-  .app-root md-toolbar .app-toolbar {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    width: 100%; }
-  .app-root h1 {
-    font-size: 20px; }
+  font-family:  Roboto, 'Helvetica Neue', sans-serif; }
+
+.app-root h4 {
+  font-size: 10px; }
+
+.app-root md-toolbar .spacer {
+  flex: 1 1 auto; }
+
+.app-root md-toolbar md-icon {
+  padding: 14px;
+  cursor: pointer; }
+
+.app-root md-toolbar .app-toolbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%; }
+

@@ -1,13 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AuthHttp, tokenNotExpired } from 'angular2-jwt';
-import { IRecipe } from './model/recipe';
+import { Component, OnInit, Input, ApplicationRef } from '@angular/core';
+import { Router }   from '@angular/router';
+import { MdIconRegistry } from '@angular/material';
+import { AuthService } from './service/auth.service';
 import { AppService } from './service/app.service';
+import { IRecipe } from './model/recipe';
 import { RecipeService } from './service/recipe.service';
-import { HomeComponent } from './home/home.component';
-import { ViewRecipeComponent } from './recipe/viewrecipe.component';
-import { EditRecipeComponent } from './recipe/editrecipe.component';
-import { CreateRecipeComponent } from './recipe/createrecipe.component';
-import { DeleteRecipeComponent } from './recipe/deleterecipe.component';
 
 import '../favicon.ico';
 import '../assets/pizza01_1024.jpg';
@@ -15,91 +12,71 @@ import '../assets/chickenpie01_1024.jpg';
 import '../assets/spicybeef01_1024.jpg';
 import '../assets/icon/ic_add_box_black_24px.svg';
 import '../assets/icon/ic_delete_forever_black_24px.svg';
-
-declare var Auth0Lock: any;
+import '../assets/icon/ic_account_box_black_24px.svg';
 
 @Component({
   selector: 'cookbook-app',
   template: require('./cookbook.component.html'),
-  styles: [require('./cookbook.component.css')],
-  providers: [AppService, RecipeService]
+  styles: [require('./cookbook.component.css')]
 })
 export class CookbookAppComponent implements OnInit {
 
-  constructor(
-    private _recipeService: RecipeService,
-    private _appService: AppService,
-  ) {
-      _appService.setItem('title','Cookbook');
-      _appService.setItem('givenName','');
+  constructor(private router : Router,
+              private iconRegistry : MdIconRegistry,
+              private recipeService: RecipeService,
+              private appService: AppService,
+              private authService: AuthService,
+              private appRef : ApplicationRef)
+  {
+    appService.setItem('appTitle','Cookbook');
+    iconRegistry.addSvgIcon('add', 'assets/icon/ic_add_box_black_24px.svg');
+    iconRegistry.addSvgIcon('account box', 'assets/icon/ic_account_box_black_24px.svg');
   }
 
   recipes: IRecipe[];
-  title: string;
-  devLogin: boolean = false;
+  appTitle: string;
+  givenName : string;
 
-  lock = new Auth0Lock('0zrbs6HfWDjL8sh68z7kSu1WL6wAjRE7', 'michael-brydie.au.auth0.com');
-
-  ngOnInit() {
-    this._recipeService.getRecipes()
+  ngOnInit()
+  {
+    this.recipeService.getRecipes()
       .subscribe(response => this.recipes = response);
-    this.title = this._appService.getItem('title');
+    this.appTitle = this.appService.getItem('appTitle');
+    this.updateLoginGreeting();
+    this.authService.authEvents.subscribe(
+      str => {
+        this.updateLoginGreeting();
+        this.appRef.tick();
+        //alert(str);
+      }
+    )
   }
 
-  doLogin() {
-    this.login();
-    //this._router.renavigate();
+  login()
+  {
+    this.authService.login();
   }
 
-  doLogout() {
-    this.logout();
-    //this._router.renavigate();
+  logout()
+  {
+    this.authService.logout();
   }
 
-  // Google client ID
-  // 986625760223-6vmdd97qfv2o27kf6n1in6ecnnsvh7a3.apps.googleusercontent.com
-  // Secret
-  // 1BnSTcPOICuFfNhYm4Kv3Mx_
-  login() {
-    if (process.env.ENV === 'production') {
-      this.lock.show({}, (err: any, profile: any, token: any) => {
-        if (err) {
-          alert(err);
-          return;
-        }
-        // If authentication is successful, save the items
-        // in local storage
-        localStorage.setItem('profile', JSON.stringify(profile));
-        localStorage.setItem('id_token', token);
-        //this.zoneImpl.run(() => this.user = profile);
-        this._appService.setItem('givenName', profile.given_name);
-      });
-    }
-    else {
-      this.devLogin = true;
-      this._appService.setItem('givenName','Bob');
-    }
+  isLoggedIn() : boolean
+  {
+    return this.authService.isLoggedIn();
   }
 
-
-  logout() {
-    this._appService.setItem('givenName','');
-    if (process.env.ENV === 'production') {
-      localStorage.removeItem('profile');
-      localStorage.removeItem('id_token');
+  updateLoginGreeting()
+  {
+    var profile = JSON.parse(this.authService.getProfile());
+    if (profile != null)
+    {
+      this.givenName = profile.given_name;
     }
-    else {
-      this.devLogin = false;
-    }
-  }
-
-  loggedIn() {
-    if (process.env.ENV === 'production') {
-      return tokenNotExpired();
-    }
-    else {
-      return this.devLogin;
+    else
+    {
+      this.givenName = '';
     }
   }
 }
-//	{"email":"michael.brydie@gmail.com","email_verified":true,"name":"Michael Brydie","given_name":"Michael","family_name":"Brydie","picture":"https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg","gender":"male","locale":"en","clientID":"0zrbs6HfWDjL8sh68z7kSu1WL6wAjRE7","updated_at":"2016-06-18T01:52:45.306Z","user_id":"google-oauth2|115840693890092937292","nickname":"michael.brydie","identities":[{"provider":"google-oauth2","access_token":"ya29.Ci8FAwyNYDVERIRm6Z9tm3m-cvilB2F9K-HLFE3nrEnvdDC3EUyqjKkRuMdbrZkYWg","expires_in":3600,"user_id":"115840693890092937292","connection":"google-oauth2","isSocial":true}],"created_at":"2016-06-18T01:18:51.014Z","global_client_id":"yNgSEs0agjHuyTnICMNxIjeWFbXEgL99"}

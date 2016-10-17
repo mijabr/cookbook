@@ -1,13 +1,12 @@
 <div class="app-root">
-  <div>
-    <md-toolbar color="primary">
-      <md-icon [routerLink]="['recipe/create']">menu</md-icon>
-      <div class="app-toolbar">
-        <h1>{{title}}</h1>
-      </div>
-    </md-toolbar>
-    <div class="app-content">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
+	<md-toolbar class="app-toolbar">
+		<md-icon *ngIf='isLoggedIn()' svgIcon="add" [routerLink]="['recipe/create']"></md-icon>
+		<span class="spacer"></span>
+		<h4 *ngIf='isLoggedIn()'>Logged in as {{givenName}}</h4>
+		<md-icon *ngIf='isLoggedIn()' svgIcon="account box" (click)="logout()"></md-icon>
+		<md-icon *ngIf='!isLoggedIn()' svgIcon="account box" (click)="login()"></md-icon>
+	</md-toolbar>
+	<div class="app-content">
+		<router-outlet></router-outlet>
+	</div>
 </div>

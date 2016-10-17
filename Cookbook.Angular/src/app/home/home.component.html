@@ -1,7 +1,6 @@
 <div class="home">
     <div class="welcome">
-        <h4 *ngIf='givenName' class="md-display-4">Hi {{givenName}}, welcome to {{title}}. Discover, create & enjoy!</h4>
-        <h4 *ngIf='!givenName' class="md-display-4">Welcome to {{title}}. Discover, create & enjoy!</h4>
+        <h4 class="md-display-4">Welcome to {{appTitle}}. Discover, create & enjoy!</h4>
     </div>
     <section>
         <span *ngFor='let r of recipes'>

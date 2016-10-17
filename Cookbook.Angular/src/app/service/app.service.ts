@@ -13,4 +13,8 @@ export class AppService {
     getItem(key: string) : string {
         return localStorage.getItem(key);
     }
+
+    removeItem(key: string) {
+        localStorage.removeItem(key);
+    }
 }

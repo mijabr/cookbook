@@ -12,9 +12,9 @@ import '../array.extension'
 })
 export class CreateRecipeComponent implements OnInit {
   
-  constructor(private iconRegistry : MdIconRegistry,
-              private recipeService : RecipeService,
-              private router: Router)
+  constructor(private router: Router,
+              private iconRegistry : MdIconRegistry,
+              private recipeService : RecipeService)
   {
     iconRegistry.addSvgIcon('add', 'assets/icon/ic_add_box_black_24px.svg');
     iconRegistry.addSvgIcon('delete', 'assets/icon/ic_delete_forever_black_24px.svg');
@@ -26,6 +26,7 @@ export class CreateRecipeComponent implements OnInit {
   {
     this.selectedRecipe = new Recipe();
   }
+
 
   onSave()
   {

@@ -12,6 +12,10 @@ import { CreateRecipeComponent } from './recipe/createrecipe.component';
 import { DeleteRecipeComponent } from './recipe/deleterecipe.component';
 import { routing } from './cookbook.routing';
 import { MaterialModule } from '@angular/material';
+import { AuthService } from './service/auth.service';
+import { AppService } from './service/app.service';
+import { IRecipe } from './model/recipe';
+import { RecipeService } from './service/recipe.service';
 
 @NgModule({
   imports: [
@@ -31,6 +35,11 @@ import { MaterialModule } from '@angular/material';
       CreateRecipeComponent,
       DeleteRecipeComponent
     ],
+  providers:[
+    AppService,
+    AuthService,
+    RecipeService
+  ],
   bootstrap: [ CookbookAppComponent ]
 })
 export class CookbookModule { }

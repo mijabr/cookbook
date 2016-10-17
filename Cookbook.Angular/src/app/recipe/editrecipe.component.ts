@@ -12,9 +12,9 @@ import '../array.extension'
 })
 export class EditRecipeComponent implements OnInit {
   
-  constructor(private iconRegistry : MdIconRegistry,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private router: Router,
+              private iconRegistry : MdIconRegistry,
               private _recipeService : RecipeService)
   {
     iconRegistry.addSvgIcon('add', 'assets/icon/ic_add_box_black_24px.svg');
