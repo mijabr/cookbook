@@ -1,33 +1,48 @@
-import {Component, Injectable} from '@angular/core';
-import {Http, Headers, RequestOptions} from "@angular/http";
-import {Observable} from "rxjs/Observable"
-import {IRecipe} from '../model/recipe';
-import {MockRecipes} from './recipe.mock';
+import { Component, Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from './auth.service';
+import { IRecipe } from '../model/recipe';
+import { MockRecipes } from './recipe.mock';
 import '../array.extension'
 
 @Injectable()
 export class RecipeService {
-
-    constructor(private _http: Http) {
+    constructor(private http: Http,
+                private authService: AuthService) {
     }
-    
-    recipes : IRecipe[];
-    recipe : IRecipe[];
-    static nextMockId : number = 4;
 
-    getRecipes() : Observable<IRecipe[]> {
+    recipes: IRecipe[];
+    recipe: IRecipe[];
+    static nextMockId: number = 4;
+
+    createRequestOptions() : RequestOptions {
+        return new RequestOptions({ headers: this.createHeader() });
+    }
+
+    createHeader(): Headers {
+        var header = new Headers({ 'Content-Type': 'application/json' });
+        this.addAuthorisationHeader(header);
+        return header;
+    }
+
+    addAuthorisationHeader(headers: Headers): void {
+        headers.append('Authorization', 'Bearer ' + this.authService.getToken())
+    }
+
+    getRecipes(): Observable<IRecipe[]> {
         if (process.env.ENV === 'production') {
-            return this._http.get("api/recipe")
+            return this.http.get("api/recipe", this.createRequestOptions())
                 .map(response => <IRecipe[]>response.json());
         }
         else {
             return Observable.of(MockRecipes);
         }
     }
-    
-    getRecipe(id : number) : Observable<IRecipe> {
+
+    getRecipe(id: number): Observable<IRecipe> {
         if (process.env.ENV === 'production') {
-            return this._http.get("api/recipe/" + String(id))
+            return this.http.get("api/recipe/" + String(id), this.createRequestOptions())
                 .map(response => <IRecipe>response.json());
         }
         else {
@@ -35,24 +50,20 @@ export class RecipeService {
         }
     }
 
-    updateRecipe(recipe : IRecipe) : Observable<any> {
+    updateRecipe(recipe: IRecipe): Observable<any> {
         if (process.env.ENV === 'production') {
             let body = JSON.stringify(recipe);
-            let headers = new Headers({ 'Content-Type': 'application/json' });
-            let options = new RequestOptions({ headers: headers });
-            return this._http.put("api/recipe", body, options);
+            return this.http.put("api/recipe", body, this.createRequestOptions());
         }
         else {
-            return Observable.of(MockRecipes[recipe.Id-1]);
+            return Observable.of(MockRecipes[recipe.Id - 1]);
         }
     }
 
-    addRecipe(recipe : IRecipe) : Observable<any> {
+    addRecipe(recipe: IRecipe): Observable<any> {
         if (process.env.ENV === 'production') {
             let body = JSON.stringify(recipe);
-            let headers = new Headers({ 'Content-Type': 'application/json' });
-            let options = new RequestOptions({ headers: headers });
-            return this._http.post("api/recipe", body, options);
+            return this.http.post("api/recipe", body, this.createRequestOptions());
         }
         else {
             recipe.Id = this.getNextMockId();
@@ -61,18 +72,18 @@ export class RecipeService {
         }
     }
 
-    deleteRecipe(id : number) : Observable<any> {
+    deleteRecipe(id: number): Observable<any> {
         if (process.env.ENV === 'production') {
-            return this._http.delete("api/recipe/" + String(id))
+            return this.http.delete("api/recipe/" + String(id), this.createRequestOptions())
         }
         else {
-            var r : IRecipe = MockRecipes.find(r => r.Id == id);
+            var r: IRecipe = MockRecipes.find(r => r.Id == id);
             MockRecipes.remove(r);
             return Observable.of("deleted");
         }
     }
 
-    getNextMockId() : number {
+    getNextMockId(): number {
         RecipeService.nextMockId = RecipeService.nextMockId + 1;
         return RecipeService.nextMockId - 1;
     }

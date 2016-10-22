@@ -10,7 +10,7 @@ namespace Cookbook.Extensions
     {
         public static Recipe Clone(this Recipe recipe)
         {
-            var copy = new Recipe() { Id = recipe.Id, Name = recipe.Name, Method = recipe.Method };
+            var copy = new Recipe() { Id = recipe.Id, Name = recipe.Name, UserId = recipe.UserId, Method = recipe.Method };
             copy.Ingredients = new List<Ingredient>();
             foreach (var ingredient in recipe.Ingredients)
             {
@@ -24,6 +24,13 @@ namespace Cookbook.Extensions
             }
 
             return copy;
+        }
+
+        public static Recipe MakeUserCopy(this Recipe recipe, string userId)
+        {
+            var userCopy = recipe.Clone();
+            userCopy.IsOwn = (recipe.UserId == userId);
+            return userCopy;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Cookbook.DataAccess
         public static List<Recipe> Recipes = new List<Recipe>() {
             new Recipe() {
                 Name = "Pizza Dough",
+                UserId = "google-oauth2|115840693890092937292",
                 Ingredients = new List<Ingredient>() {
                     new Ingredient() { Name = "Water", Condition = "Warm", Quantity=  1, QuantityName = "L" },
                     new Ingredient() { Name = "Yeast", Condition = "", Quantity = 60, QuantityName = "g" },
@@ -27,6 +28,7 @@ namespace Cookbook.DataAccess
             new Recipe()
             {
                 Name = "Chicken, Leek and Mushroom Pie",
+                UserId = "google-oauth2|115840693890092937292",
                 Ingredients = new List<Ingredient>() {
                     new Ingredient() { Name = "Butter", Condition = "", Quantity = 50, QuantityName = "g" },
                     new Ingredient() { Name = "Celery Stalks", Condition = "Finely chopped", Quantity = 3, QuantityName = "" },
@@ -49,6 +51,7 @@ namespace Cookbook.DataAccess
             new Recipe()
             {
                 Name = "Spicy Beef with Beans and Bok Choy",
+                UserId = "auth0|5809a3b92717df8f224cfd4d",
                 Ingredients = new List<Ingredient>() {
                     new Ingredient() { Name = "Ginger", Condition = "Finely chopped", Quantity = 1, QuantityName = " nob" },
                     new Ingredient() { Name = "Garlick", Condition = "Crushed", Quantity = 2, QuantityName = " cloves" },

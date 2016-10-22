@@ -3,22 +3,22 @@ using Cookbook.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace Cookbook.Controllers
 {
     [RoutePrefix("api")]
+    [Authorize]
     public class RecipeController : ApiController
     {
         [HttpGet]
         [Route("recipe")]
+        [AllowAnonymous]
         public IHttpActionResult GetRecipe()
         {
             RecipeDataAccess da = new RecipeDataAccess();
-            IEnumerable<Recipe> result = da.GetAllRecipes();
-
+            IEnumerable<Recipe> result = da.GetAllRecipes(GetUserId());
             if (result.Count() > 0)
             {
                 return Ok(result);
@@ -29,10 +29,11 @@ namespace Cookbook.Controllers
 
         [HttpGet]
         [Route("recipe/{id}")]
+        [AllowAnonymous]
         public IHttpActionResult GetRecipe(int id)
         {
             RecipeDataAccess da = new RecipeDataAccess();
-            Recipe result = da.GetRecipe(id);
+            Recipe result = da.GetRecipe(id, GetUserId());
 
             if (result != null)
             {
@@ -47,7 +48,7 @@ namespace Cookbook.Controllers
         public IHttpActionResult Put([FromBody] Recipe recipe)
         {
             RecipeDataAccess da = new RecipeDataAccess();
-            da.UpdateRecipe(recipe);
+            da.UpdateRecipe(recipe, GetUserId());
             return Ok();
         }
 
@@ -56,7 +57,7 @@ namespace Cookbook.Controllers
         public IHttpActionResult Post([FromBody] Recipe recipe)
         {
             RecipeDataAccess da = new RecipeDataAccess();
-            da.AddRecipe(recipe);
+            da.AddRecipe(recipe, GetUserId());
             return Ok();
         }
 
@@ -65,8 +66,23 @@ namespace Cookbook.Controllers
         public IHttpActionResult DeleteRecipe(int id)
         {
             RecipeDataAccess da = new RecipeDataAccess();
-            da.DeleteRecipe(id);
+            da.DeleteRecipe(id, GetUserId());
             return Ok();
+        }
+
+        private string GetUserId()
+        {
+            string userId;
+            try
+            {
+                userId = ClaimsPrincipal.Current.Claims.First().Value;
+            }
+            catch (Exception x)
+            {
+                userId = "Guest";
+            }
+
+            return userId;
         }
     }
 }

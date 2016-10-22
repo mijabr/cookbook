@@ -8,21 +8,21 @@ namespace Cookbook.DataAccess
 {
     public class RecipeDataAccess
     {
-        public IEnumerable<Recipe> GetAllRecipes()
+        public IEnumerable<Recipe> GetAllRecipes(string userId)
         {
             var recipes = new List<Recipe>();
             using (var ctx = new RecipeContext())
             {
                 foreach (var recipe in ctx.Recipes)
                 {
-                    recipes.Add(recipe.Clone());
+                    recipes.Add(recipe.MakeUserCopy(userId));
                 }
             }
 
             return recipes;
         }
 
-        public Recipe GetRecipe(int id)
+        public Recipe GetRecipe(int id, string userId)
         {
             Recipe recipe = null;
             using (var ctx = new RecipeContext())
@@ -30,17 +30,18 @@ namespace Cookbook.DataAccess
                 recipe = ctx.Recipes.FirstOrDefault(r => r.Id == id);
                 if (recipe != null)
                 {
-                    recipe = recipe.Clone();
+                    recipe = recipe.MakeUserCopy(userId);
                 }
             }
 
             return recipe;
         }
 
-        public void AddRecipe(Recipe recipe)
+        public void AddRecipe(Recipe recipe, string userId)
         {
             using (var ctx = new RecipeContext())
             {
+                recipe.UserId = userId;
                 ICollection<RecipePicture> pictures = recipe.Pictures;
                 ICollection<Ingredient> ingredients = recipe.Ingredients;
                 recipe.Pictures = null;
@@ -63,7 +64,7 @@ namespace Cookbook.DataAccess
             }
         }
 
-        public void UpdateRecipe(Recipe recipe)
+        public void UpdateRecipe(Recipe recipe, string userId)
         {
             using (var ctx = new RecipeContext())
             {
@@ -73,7 +74,7 @@ namespace Cookbook.DataAccess
                 recipe.Ingredients = null;
 
                 Recipe existingRecipe = ctx.Recipes.FirstOrDefault(r => r.Id == recipe.Id);
-                if (existingRecipe != null)
+                if (existingRecipe != null && userId == existingRecipe.UserId)
                 {
                     existingRecipe.Name = recipe.Name;
                     existingRecipe.Method = recipe.Method;
@@ -94,11 +95,11 @@ namespace Cookbook.DataAccess
             }
         }
 
-        public void DeleteRecipe(int id)
+        public void DeleteRecipe(int id, string userId)
         {
             using (var ctx = new RecipeContext())
             {
-                Recipe recipe = ctx.Recipes.FirstOrDefault(r => r.Id == id);
+                Recipe recipe = ctx.Recipes.FirstOrDefault(r => r.Id == id && r.UserId == userId);
                 if (recipe != null)
                 {
                     ctx.Recipes.Remove(recipe);
@@ -116,7 +117,7 @@ namespace Cookbook.DataAccess
                 {
                     foreach (var recipe in MockData.Recipes)
                     {
-                        AddRecipe(recipe);
+                        AddRecipe(recipe, recipe.UserId);
                     }
                 }
             }

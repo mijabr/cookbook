@@ -17,6 +17,14 @@ import { AppService } from './service/app.service';
 import { IRecipe } from './model/recipe';
 import { RecipeService } from './service/recipe.service';
 
+import '../favicon.ico';
+import '../assets/pizza01_1024.jpg';
+import '../assets/chickenpie01_1024.jpg';
+import '../assets/spicybeef01_1024.jpg';
+import '../assets/icon/ic_add_box_black_24px.svg';
+import '../assets/icon/ic_delete_forever_black_24px.svg';
+import '../assets/icon/ic_account_box_black_24px.svg';
+
 @NgModule({
   imports: [
       BrowserModule,

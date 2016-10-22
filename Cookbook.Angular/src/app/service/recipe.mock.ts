@@ -1,4 +1,4 @@
-import { IRecipe } from '../model/recipe';
+import { IRecipe, IIngredient } from '../model/recipe';
 
 export var MockRecipes : IRecipe[] = 
 [

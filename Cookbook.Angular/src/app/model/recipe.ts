@@ -35,6 +35,7 @@ export class Recipe implements IRecipe
 
     Id: number;
     Name: string;
+    IsOwn : boolean;
     Ingredients: IIngredient[];
     Method: string;
     Pictures: IRecipePicture[];

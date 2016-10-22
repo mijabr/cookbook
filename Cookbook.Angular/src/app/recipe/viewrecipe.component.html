@@ -1,7 +1,7 @@
 <div class="nav-buttons">
 	<button md-raised-button [routerLink]="['/']">Home</button>
-	<button *ngIf="selectedRecipe" md-raised-button [routerLink]="['/recipe/edit/', selectedRecipe.Id]">Edit</button>
-	<button *ngIf="selectedRecipe" md-raised-button [routerLink]="['/recipe/delete/', selectedRecipe.Id]">Delete</button>
+	<button *ngIf="selectedRecipe && selectedRecipe.IsOwn" md-raised-button [routerLink]="['/recipe/edit/', selectedRecipe.Id]">Edit</button>
+	<button *ngIf="selectedRecipe && selectedRecipe.IsOwn" md-raised-button [routerLink]="['/recipe/delete/', selectedRecipe.Id]">Delete</button>
 </div>
 <div *ngIf="selectedRecipe">
 	<md-card class="recipe">

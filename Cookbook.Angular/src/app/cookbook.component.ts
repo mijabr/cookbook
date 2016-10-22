@@ -1,18 +1,10 @@
 import { Component, OnInit, Input, ApplicationRef } from '@angular/core';
-import { Router }   from '@angular/router';
+import { Router } from '@angular/router';
 import { MdIconRegistry } from '@angular/material';
 import { AuthService } from './service/auth.service';
 import { AppService } from './service/app.service';
 import { IRecipe } from './model/recipe';
 import { RecipeService } from './service/recipe.service';
-
-import '../favicon.ico';
-import '../assets/pizza01_1024.jpg';
-import '../assets/chickenpie01_1024.jpg';
-import '../assets/spicybeef01_1024.jpg';
-import '../assets/icon/ic_add_box_black_24px.svg';
-import '../assets/icon/ic_delete_forever_black_24px.svg';
-import '../assets/icon/ic_account_box_black_24px.svg';
 
 @Component({
   selector: 'cookbook-app',
@@ -20,25 +12,22 @@ import '../assets/icon/ic_account_box_black_24px.svg';
   styles: [require('./cookbook.component.css')]
 })
 export class CookbookAppComponent implements OnInit {
-
-  constructor(private router : Router,
-              private iconRegistry : MdIconRegistry,
-              private recipeService: RecipeService,
-              private appService: AppService,
-              private authService: AuthService,
-              private appRef : ApplicationRef)
-  {
-    appService.setItem('appTitle','Cookbook');
+  constructor(private router: Router,
+    private iconRegistry: MdIconRegistry,
+    private recipeService: RecipeService,
+    private appService: AppService,
+    private authService: AuthService,
+    private appRef: ApplicationRef) {
+    appService.setItem('appTitle', 'Cookbook');
     iconRegistry.addSvgIcon('add', 'assets/icon/ic_add_box_black_24px.svg');
     iconRegistry.addSvgIcon('account box', 'assets/icon/ic_account_box_black_24px.svg');
   }
 
   recipes: IRecipe[];
   appTitle: string;
-  givenName : string;
+  givenName: string;
 
-  ngOnInit()
-  {
+  ngOnInit() {
     this.recipeService.getRecipes()
       .subscribe(response => this.recipes = response);
     this.appTitle = this.appService.getItem('appTitle');
@@ -47,35 +36,28 @@ export class CookbookAppComponent implements OnInit {
       str => {
         this.updateLoginGreeting();
         this.appRef.tick();
-        //alert(str);
       }
     )
   }
 
-  login()
-  {
+  login() {
     this.authService.login();
   }
 
-  logout()
-  {
+  logout() {
     this.authService.logout();
   }
 
-  isLoggedIn() : boolean
-  {
+  isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
 
-  updateLoginGreeting()
-  {
+  updateLoginGreeting() {
     var profile = JSON.parse(this.authService.getProfile());
-    if (profile != null)
-    {
+    if (profile != null) {
       this.givenName = profile.given_name;
     }
-    else
-    {
+    else {
       this.givenName = '';
     }
   }
