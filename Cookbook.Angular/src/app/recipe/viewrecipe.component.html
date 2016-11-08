@@ -1,26 +1,26 @@
 <div class="nav-buttons">
-	<button md-raised-button [routerLink]="['/']">Home</button>
-	<button *ngIf="selectedRecipe && selectedRecipe.IsOwn" md-raised-button [routerLink]="['/recipe/edit/', selectedRecipe.Id]">Edit</button>
-	<button *ngIf="selectedRecipe && selectedRecipe.IsOwn" md-raised-button [routerLink]="['/recipe/delete/', selectedRecipe.Id]">Delete</button>
+	<button md-raised-button [routerLink]="['/cookbook']">Home</button>
+	<button *ngIf="recipe && recipe.IsOwn" md-raised-button [routerLink]="['/cookbook/recipe/edit/', recipe.Id]">Edit</button>
+	<button *ngIf="recipe && recipe.IsOwn" md-raised-button [routerLink]="['/cookbook/recipe/delete/', recipe.Id]">Delete</button>
 </div>
-<div *ngIf="selectedRecipe">
+<div *ngIf="recipe">
 	<md-card class="recipe">
 		<md-card-content>
-			<h2>{{selectedRecipe.Name}}</h2>
+			<h2>{{recipe.Name}}</h2>
 			<h3>Ingredients</h3>
 			<ul>
-				<li *ngFor="let ingredient of selectedRecipe.Ingredients">
+				<li *ngFor="let ingredient of recipe.Ingredients">
 					{{ingredient.Quantity}}{{ingredient.QuantityName}} {{ingredient.Name}}
 					<span *ngIf="ingredient.Condition">- {{ingredient.Condition}}</span>
 				</li>
 			</ul>
 			<h3>Method</h3>
-			<div [innerHTML]="selectedRecipe.Method"></div>
+			<div [innerHTML]="recipe.Method"></div>
 		</md-card-content>
 	</md-card>
-	<md-card *ngFor='let pic of selectedRecipe.Pictures' class="pictures">
+	<md-card *ngFor='let pic of recipe.Pictures' class="pictures">
 		<md-card-content>
-			<img md-card-image src="/assets/{{pic.Filename}}">
+			<img md-card-image src="{{pics[pic.Filename]}}">
 			<div>{{pic.Caption}}</div>
 		</md-card-content>
 	</md-card>

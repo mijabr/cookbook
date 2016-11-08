@@ -1,6 +1,6 @@
 <div class="app-root">
 	<md-toolbar class="app-toolbar">
-		<md-icon *ngIf='isLoggedIn()' svgIcon="add" [routerLink]="['recipe/create']"></md-icon>
+		<md-icon *ngIf='isLoggedIn()' svgIcon="add" [routerLink]="['cookbook/recipe/create']"></md-icon>
 		<span class="spacer"></span>
 		<h4 *ngIf='isLoggedIn()'>Logged in as {{givenName}}</h4>
 		<md-icon *ngIf='isLoggedIn()' svgIcon="account box" (click)="logout()"></md-icon>

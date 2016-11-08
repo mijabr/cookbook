@@ -1,24 +1,24 @@
 <div class="nav-buttons">
-	<md-input class="deltext" *ngIf="selectedRecipe" [(ngModel)]='deleteRecipeText' placeholder='Type DELETE to confirm'></md-input>
-	<button *ngIf="selectedRecipe" md-raised-button (click)='onDelete()'>Delete</button>
-	<button *ngIf="selectedRecipe" md-raised-button [routerLink]="['/recipe/view/', selectedRecipe.Id]">Cancel</button>
+	<md-input class="deltext" *ngIf="recipe" [(ngModel)]='deleteRecipeText' placeholder='Type DELETE to confirm'></md-input>
+	<button *ngIf="recipe" md-raised-button (click)='onDelete()'>Delete</button>
+	<button *ngIf="recipe" md-raised-button [routerLink]="['/cookbook/recipe/view/', recipe.Id]">Cancel</button>
 </div>
-<div *ngIf="selectedRecipe">
+<div *ngIf="recipe">
 	<md-card class="recipe">
 		<md-card-content>
-			<h2>{{selectedRecipe.Name}}</h2>
+			<h2>{{recipe.Name}}</h2>
 			<h3>Ingredients</h3>
 			<ul>
-				<li *ngFor="let ingredient of selectedRecipe.Ingredients">
+				<li *ngFor="let ingredient of recipe.Ingredients">
 					{{ingredient.Quantity}}{{ingredient.QuantityName}} {{ingredient.Name}} <span *ngIf="ingredient.Condition">- {{ingredient.Condition}}</span></li>
 			</ul>
 			<h3>Method</h3>
-			<div [innerHTML]="selectedRecipe.Method"></div>
+			<div [innerHTML]="recipe.Method"></div>
 		</md-card-content>
 	</md-card>
-	<md-card *ngFor='let pic of selectedRecipe.Pictures' class="pictures">
+	<md-card *ngFor='let pic of recipe.Pictures' class="pictures">
 		<md-card-content>
-			<img md-card-image src="/assets/{{pic.Filename}}">
+			<img md-card-image src="{{pics[pic.Filename]}}">
 			<div>{{pic.Caption}}</div>
 		</md-card-content>
 	</md-card>

@@ -33,6 +33,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabases>false</PublishDatabases>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -144,13 +146,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cookbook-app.js" />
     <Content Include="Global.asax" />
-    <Content Include="index.html" />
-    <Content Include="polyfills.js" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
-    <Content Include="vendor.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -189,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="cookbook\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -223,26 +222,8 @@
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>if exist $(ProjectDir)polyfills*.* del $(ProjectDir)polyfills*.*
-if exist $(ProjectDir)vendor*.* del $(ProjectDir)vendor*.*
-if exist $(ProjectDir)cookbook-app*.* del $(ProjectDir)cookbook-app*.*
-if exist $(ProjectDir)assets rmdir /s /q $(ProjectDir)assets
-if exist $(ProjectDir)assets\icon rmdir /s /q $(ProjectDir)assets\icon
-
-if exist $(TargetDir)polyfills*.* del $(TargetDir)polyfills*.*
-if exist $(TargetDir)vendor*.* del $(TargetDir)vendor*.*
-if exist $(TargetDir)cookbook-app*.* del $(TargetDir)cookbook-app*.*
-if exist $(TargetDir)assets rmdir /s /q $(TargetDir)assets
-if exist $(TargetDir)assets\icon rmdir /s /q $(TargetDir)assets\icon
-
-if exist $(SolutionDir)Cookbook.Angular\dist (echo Copying Angular distributables)
-
-if exist $(SolutionDir)Cookbook.Angular\dist (echo xcopy /q /s /y $(SolutionDir)Cookbook.Angular\dist $(ProjectDir))
-if exist $(SolutionDir)Cookbook.Angular\dist xcopy /q /s /y $(SolutionDir)Cookbook.Angular\dist $(ProjectDir)
-
-if exist $(SolutionDir)Cookbook.Angular\dist (echo xcopy /q /s /y $(SolutionDir)Cookbook.Angular\dist $(TargetDir))
-if exist $(SolutionDir)Cookbook.Angular\dist xcopy /q /s /y $(SolutionDir)Cookbook.Angular\dist $(TargetDir)
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -20,7 +20,7 @@ export class AuthService {
   });
   authSubject = new Subject<string>();
   authEvents = this.authSubject.asObservable();
-  useAuth0 : boolean = true;
+  backdoorToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL21pY2hhZWwtYnJ5ZGllLmF1LmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDExNTg0MDY5Mzg5MDA5MjkzNzI5MiIsImF1ZCI6IjB6cmJzNkhmV0RqTDhzaDY4ejdrU3UxV0w2d0FqUkU3IiwiZXhwIjoxNDc4Njc1NTcxLCJpYXQiOjE0Nzg2Mzk1NzF9.CTvWgwXDKcQCRAq1M0MSGxLEkV1A6fmpqjUIqVBxUjs'; // google-oauth2|115840693890092937292
 
   // Google client ID
   // 986625760223-6vmdd97qfv2o27kf6n1in6ecnnsvh7a3.apps.googleusercontent.com
@@ -33,7 +33,7 @@ export class AuthService {
 
   login()
   {
-    if (process.env.ENV === 'production' && this.useAuth0)
+    if (process.env.ENV === 'production' && this.backdoorToken == '')
     {
       this.lock.show({}, (err: any, profile: any, token: any) => {
         if (err) {
@@ -48,9 +48,8 @@ export class AuthService {
     }
     else
     {
+      var token = this.backdoorToken;
       var profile = JSON.parse('{"email":"michael.brydie@gmail.com","email_verified":true,"name":"Michael Brydie","given_name":"Michael","family_name":"Brydie","picture":"https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg","gender":"male","locale":"en","clientID":"0zrbs6HfWDjL8sh68z7kSu1WL6wAjRE7","updated_at":"2016-06-18T01:52:45.306Z","user_id":"google-oauth2|115840693890092937292","nickname":"michael.brydie","identities":[{"provider":"google-oauth2","access_token":"ya29.Ci8FAwyNYDVERIRm6Z9tm3m-cvilB2F9K-HLFE3nrEnvdDC3EUyqjKkRuMdbrZkYWg","expires_in":3600,"user_id":"115840693890092937292","connection":"google-oauth2","isSocial":true}],"created_at":"2016-06-18T01:18:51.014Z","global_client_id":"yNgSEs0agjHuyTnICMNxIjeWFbXEgL99"}');
-      var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL21pY2hhZWwtYnJ5ZGllLmF1LmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDExNTg0MDY5Mzg5MDA5MjkzNzI5MiIsImF1ZCI6IjB6cmJzNkhmV0RqTDhzaDY4ejdrU3UxV0w2d0FqUkU3IiwiZXhwIjoxNDc3MTIwOTExLCJpYXQiOjE0NzcwODQ5MTEsImFtciI6W119.M69FO3pZYBizdeIqg2-Vrhyh5_sWG3NVtCTMCAJ9YhA'; // google-oauth2|115840693890092937292
-      //'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL21pY2hhZWwtYnJ5ZGllLmF1LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ODA5YTNiOTI3MTdkZjhmMjI0Y2ZkNGQiLCJhdWQiOiIwenJiczZIZldEakw4c2g2OHo3a1N1MVdMNndBalJFNyIsImV4cCI6MTQ3NzA2Mjc0NywiaWF0IjoxNDc3MDI2NzQ3LCJhbXIiOltdfQ.BoqtEdfIeJi113cObRhFnIInLwsF3F9K0kVHiZzysbU'; // auth0|5809a3b92717df8f224cfd4d
       this.appService.setItem('profile', JSON.stringify(profile));
       this.appService.setItem('id_token', token);
       this.authSubject.next("login");

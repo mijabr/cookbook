@@ -69,7 +69,7 @@ namespace Cookbook
             return new ClaimsPrincipal(ClaimsIdentityFromJwt(payloadData, issuer));
         }
 
-        private static ICollection<Claim> ClaimsFromJwt(IDictionary<string, object> jwtData, string issuer)
+        public static ICollection<Claim> ClaimsFromJwt(IDictionary<string, object> jwtData, string issuer)
         {
             issuer = issuer ?? DefaultIssuer;
 

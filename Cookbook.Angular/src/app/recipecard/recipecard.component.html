@@ -1,11 +1,11 @@
 <div class="recipe-card">
   <md-card>
     <md-card-content>
-    <img *ngIf="recipe.Pictures.length > 0" md-card-image src="/assets/{{recipe.Pictures[0].Filename}}">
+    <img *ngIf="recipe.Pictures.length > 0" md-card-image src="{{pics[0]}}">
     {{recipe.Name}}
     </md-card-content>
     <md-card-actions align="center">
-      <button md-raised-button color="primary" [routerLink]="['recipe/view/', recipe.Id]">View</button>
+      <button md-raised-button color="primary" [routerLink]="['/cookbook/recipe/view/', recipe.Id]">View</button>
     </md-card-actions>
   </md-card>
 </div>

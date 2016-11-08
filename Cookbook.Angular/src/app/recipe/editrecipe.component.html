@@ -1,14 +1,14 @@
 <div class="nav-buttons">
-	<button *ngIf="selectedRecipe" md-raised-button (click)='onSave()'>Save</button>
-	<button *ngIf="selectedRecipe" md-raised-button [routerLink]="['/recipe/view/', selectedRecipe.Id]">Cancel</button>
+	<button *ngIf="recipe" md-raised-button (click)='onSave()'>Save</button>
+	<button *ngIf="recipe" md-raised-button [routerLink]="['/cookbook/recipe/view/', recipe.Id]">Cancel</button>
 </div>
-<div *ngIf="selectedRecipe">
-	<md-card *ngIf="selectedRecipe" class="recipe">
+<div *ngIf="recipe">
+	<md-card *ngIf="recipe" class="recipe">
 		<md-card-content>
-			<md-input class="recipe-name" [(ngModel)]='selectedRecipe.Name' placeholder='Recipe Name'></md-input>
+			<md-input class="recipe-name" [(ngModel)]='recipe.Name' placeholder='Recipe Name'></md-input>
 			<h3>Ingredients</h3>
 			<ul>
-				<li *ngFor="let ingredient of selectedRecipe.Ingredients">
+				<li *ngFor="let ingredient of recipe.Ingredients">
 					<md-icon svgIcon="delete" (click)='onRemoveIngredient(ingredient)'></md-icon>
 					<md-input [(ngModel)]='ingredient.Quantity' placeholder='Quantity' item-width="40" class="quantity"></md-input>
 					<md-input [(ngModel)]='ingredient.QuantityName' placeholder='Quantity Name'></md-input>
@@ -17,12 +17,12 @@
 			</ul>
 			<md-icon svgIcon="add" (click)='onAddIngredient()'></md-icon>
 			<h3>Method</h3>
-			<md-input class='recipe-method' [(ngModel)]="selectedRecipe.Method" placeholder='Method'></md-input>
+			<md-input class='recipe-method' [(ngModel)]="recipe.Method" placeholder='Method'></md-input>
 		</md-card-content>
 	</md-card>
-	<md-card *ngFor='let pic of selectedRecipe.Pictures' class="pictures">
+	<md-card *ngFor='let pic of recipe.Pictures' class="pictures">
 		<md-card-content>
-			<img md-card-image src="/assets/{{pic.Filename}}">
+			<img md-card-image src="{{pics[pic.Filename]}}">
 			<div>{{pic.Caption}}</div>
 		</md-card-content>
 	</md-card>

@@ -7,11 +7,11 @@ import { CreateRecipeComponent } from './recipe/createrecipe.component';
 import { DeleteRecipeComponent } from './recipe/deleterecipe.component';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'recipe/view/:id', component: ViewRecipeComponent },
-  { path: 'recipe/edit/:id', component: EditRecipeComponent },
-  { path: 'recipe/create', component: CreateRecipeComponent },
-  { path: 'recipe/delete/:id', component: DeleteRecipeComponent }
+  { path: 'cookbook', component: HomeComponent },
+  { path: 'cookbook/recipe/view/:id', component: ViewRecipeComponent },
+  { path: 'cookbook/recipe/edit/:id', component: EditRecipeComponent },
+  { path: 'cookbook/recipe/create', component: CreateRecipeComponent },
+  { path: 'cookbook/recipe/delete/:id', component: DeleteRecipeComponent }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

@@ -5,6 +5,7 @@ import { AuthService } from './service/auth.service';
 import { AppService } from './service/app.service';
 import { IRecipe } from './model/recipe';
 import { RecipeService } from './service/recipe.service';
+var publicPath = require('./../../config/publicPath');
 
 @Component({
   selector: 'cookbook-app',
@@ -19,8 +20,8 @@ export class CookbookAppComponent implements OnInit {
     private authService: AuthService,
     private appRef: ApplicationRef) {
     appService.setItem('appTitle', 'Cookbook');
-    iconRegistry.addSvgIcon('add', 'assets/icon/ic_add_box_black_24px.svg');
-    iconRegistry.addSvgIcon('account box', 'assets/icon/ic_account_box_black_24px.svg');
+    iconRegistry.addSvgIcon('add', publicPath.path('assets/icon/ic_add_box_black_24px.svg'));
+    iconRegistry.addSvgIcon('account box', publicPath.path('assets/icon/ic_account_box_black_24px.svg'));
   }
 
   recipes: IRecipe[];

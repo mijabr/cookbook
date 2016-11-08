@@ -4,6 +4,7 @@ import { MdIconRegistry } from '@angular/material'
 import { IRecipe, Recipe, IIngredient } from '../model/recipe';
 import { RecipeService } from '../service/recipe.service';
 import '../array.extension'
+var publicPath = require('./../../../config/publicPath');
 
 @Component({
   selector: 'createrecipe',
@@ -16,26 +17,25 @@ export class CreateRecipeComponent implements OnInit {
               private iconRegistry : MdIconRegistry,
               private recipeService : RecipeService)
   {
-    iconRegistry.addSvgIcon('add', 'assets/icon/ic_add_box_black_24px.svg');
-    iconRegistry.addSvgIcon('delete', 'assets/icon/ic_delete_forever_black_24px.svg');
+    iconRegistry.addSvgIcon('add', publicPath.path('assets/icon/ic_add_box_black_24px.svg'));
+    iconRegistry.addSvgIcon('delete', publicPath.path('assets/icon/ic_delete_forever_black_24px.svg'));
   }
 
-  selectedRecipe : IRecipe;
+  recipe : IRecipe;
 
   ngOnInit()
   {
-    this.selectedRecipe = new Recipe();
+    this.recipe = new Recipe();
   }
-
 
   onSave()
   {
-    this.recipeService.addRecipe(this.selectedRecipe)
+    this.recipeService.addRecipe(this.recipe)
       .subscribe(
         response => {
-          if (this.selectedRecipe.Id != 0)
+          if (this.recipe.Id != 0)
           {
-            this.router.navigate(['/recipe/view/', this.selectedRecipe.Id]);
+            this.router.navigate(['/recipe/view/', this.recipe.Id]);
           }
           else {
             this.router.navigate(['/']);
@@ -50,11 +50,11 @@ export class CreateRecipeComponent implements OnInit {
 
   onAddIngredient()
   {
-    this.selectedRecipe.Ingredients.push(<IIngredient>{});
+    this.recipe.Ingredients.push(<IIngredient>{});
   }
 
   onRemoveIngredient(ingredient : IIngredient)
   {
-    this.selectedRecipe.Ingredients = this.selectedRecipe.Ingredients.remove(ingredient);
+    this.recipe.Ingredients = this.recipe.Ingredients.remove(ingredient);
   }
 }

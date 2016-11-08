@@ -9,7 +9,7 @@ namespace Cookbook.DataAccess
 {
     public class RecipeContext : DbContext
     {
-        public RecipeContext() : base("recipedb")
+        public RecipeContext() : base("cookbookdb")
         {
         }
 

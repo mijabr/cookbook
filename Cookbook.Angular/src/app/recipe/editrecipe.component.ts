@@ -4,6 +4,7 @@ import { MdIconRegistry } from '@angular/material';
 import { IRecipe, IIngredient } from '../model/recipe';
 import { RecipeService } from '../service/recipe.service';
 import '../array.extension'
+var publicPath = require('./../../../config/publicPath');
 
 @Component({
   selector: 'editrecipe',
@@ -17,28 +18,35 @@ export class EditRecipeComponent implements OnInit {
               private iconRegistry : MdIconRegistry,
               private _recipeService : RecipeService)
   {
-    iconRegistry.addSvgIcon('add', 'assets/icon/ic_add_box_black_24px.svg');
-    iconRegistry.addSvgIcon('delete', 'assets/icon/ic_delete_forever_black_24px.svg');
+    iconRegistry.addSvgIcon('add', publicPath.path('assets/icon/ic_add_box_black_24px.svg'));
+    iconRegistry.addSvgIcon('delete', publicPath.path('assets/icon/ic_delete_forever_black_24px.svg'));
   }
 
-  theid : number;
-  selectedRecipe : IRecipe;
+  recipe : IRecipe;
+  pics : any = [];
 
   ngOnInit()
   {
     this.route.params.forEach((params: Params) => {
-      this.theid = +params['id'];
-      this._recipeService.getRecipe(this.theid)
-        .subscribe(recipe => this.selectedRecipe = recipe);
+      var id = +params['id'];
+      this._recipeService.getRecipe(id)
+        .subscribe(recipe => this.setRecipe(recipe));
     });
+  }
+
+  setRecipe(recipe : IRecipe) {
+    this.recipe = recipe
+    for(var pic of this.recipe.Pictures) {
+      this.pics[pic.Filename] = publicPath.path('assets/' + pic.Filename);
+    }
   }
 
   onSave()
   {
-    this._recipeService.updateRecipe(this.selectedRecipe)
+    this._recipeService.updateRecipe(this.recipe)
       .subscribe(
         response => {
-          this.router.navigate(['/recipe/view/', this.selectedRecipe.Id]);
+          this.router.navigate(['/cookbook/recipe/view/', this.recipe.Id]);
         },
         error => {
           alert(error.text());
@@ -49,11 +57,11 @@ export class EditRecipeComponent implements OnInit {
 
   onAddIngredient()
   {
-    this.selectedRecipe.Ingredients.push(<IIngredient>{});
+    this.recipe.Ingredients.push(<IIngredient>{});
   }
 
   onRemoveIngredient(ingredient : IIngredient)
   {
-    this.selectedRecipe.Ingredients = this.selectedRecipe.Ingredients.remove(ingredient);
+    this.recipe.Ingredients = this.recipe.Ingredients.remove(ingredient);
   }
 }
